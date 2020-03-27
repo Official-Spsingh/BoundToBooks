@@ -20,6 +20,9 @@ const port = process.env.PORT || "8000";
 app.get("/", (req, res) => {
     res.status(200).send("Hello SP");
   });
+  app.get("/test", (req, res) => {
+    res.status(200).send("Testing done ! Server working successfully.");
+  });
 /**
  * Server Activation
  */
