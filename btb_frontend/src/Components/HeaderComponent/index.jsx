@@ -2,6 +2,7 @@ import React from 'react'
 import { Drawer, Avatar } from 'antd';
 import { BellOutlined, ReadOutlined, UserOutlined, CreditCardOutlined, ShoppingCartOutlined, GiftOutlined, LockOutlined } from '@ant-design/icons'
 import { useState } from 'react';
+import { withRouter } from "react-router";
 function HeaderComponent(props) {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const showDrawer = () => {
@@ -11,12 +12,16 @@ function HeaderComponent(props) {
     const onClose = () => {
         setDrawerVisible(false)
     };
+    const headerRedirect = (path)=>{
+        setDrawerVisible(false); 
+        props.history.push(path)
+    }
     const title = <div className="header"><ReadOutlined /><div className="header-title">Bound To Books</div></div>
     return (
         <div className="header-component-wrapper">
             <div className="header-component">
                 <div className="left-content">
-                    <div className="logo">
+                    <div className="logo" onClick={() => props.history.push('/home')}>
                         Bound To Books
 </div>
                 </div>
@@ -36,7 +41,7 @@ function HeaderComponent(props) {
                             visible={drawerVisible}
                         >
                             <div className="list-collection">
-                                <div className="list-item">
+                                <div className="list-item" onClick={()=>headerRedirect('/profile')}>
                                     <UserOutlined /><span className="list-item-label">Profile</span>
                                 </div>
                                 <div className="list-item">
@@ -60,4 +65,4 @@ function HeaderComponent(props) {
     )
 }
 
-export default HeaderComponent
+export default withRouter(HeaderComponent);
