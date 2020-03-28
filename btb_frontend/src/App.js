@@ -1,10 +1,16 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import MainContainer from '@MainContainer'
+import 'antd/dist/antd.css'
+import '../src/scss/core.scss'
+function App(props) {
+ 
 
-function App() {
   return (
     <div className="App">
-    Hello Guyzzz
+      {
+      
+          <MainContainer />
+      }
     </div>
   );
 }

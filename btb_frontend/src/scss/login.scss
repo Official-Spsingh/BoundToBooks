@@ -1,0 +1,75 @@
+.login-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  .login-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.63), rgba(0, 0, 0, 0.78)),
+      rgba(0, 0, 0, 0.47) url("../media/images/cover.jpeg") no-repeat center;
+    background-size: cover;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 750px) {
+      height: 100%;
+    }
+    @media (max-width: 450px) {
+      height: 100%;
+    }
+    .left-content {
+      margin: 10px;
+      @media (max-width: 768px) {
+        display: none;
+      }
+      h1,
+      h2,
+      h4,
+      a {
+        color: #fff;
+        text-decoration: none;
+        text-align: center;
+      }
+      
+      h1 {
+        font-size: 32px;
+        margin-bottom: 0px;
+      }
+    }
+    .right-content {
+      margin: 10px;
+      padding: 58px 58px 16px 58px;
+      background: #fff;
+      border-radius: 12px;
+      .ant-form {
+        .ant-form-item-with-help {
+          margin-bottom: 18px;
+
+          .ant-input-affix-wrapper {
+            background: transparent;
+            color: #0a0a0a;
+            input {
+              background: transparent;
+              color: #0a0a0a;
+            }
+          }
+        }
+      }
+      .ant-btn {
+        width: 100%;
+        background: #0a0a0a;
+        border: none;
+        color: #fff;
+      }
+      h3 {
+        color: #0a0a0a;
+        padding: 9px 4px;
+      }
+    }
+  }
+}
