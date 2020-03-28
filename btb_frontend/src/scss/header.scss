@@ -1,0 +1,74 @@
+.header-component-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #0a0a0a;
+  color: #fff;
+  .header-component {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    .left-content {
+      padding: 0px 10px;
+    }
+    .right-content {
+      padding: 0px 10px;
+      .icon-container {
+        display: flex;
+        justify-content: space-around;
+        min-width: 100px;
+        .notification,
+        .profile {
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            cursor: pointer;
+        
+        }
+      }
+    }
+  }
+  
+}
+.ant-drawer-content-wrapper{
+    width: 300px !important;
+    .ant-drawer-header{
+      height: 135px;
+      background: #0a0a0a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .header{
+          color: #fff;
+          text-align: center;
+          .anticon{
+              font-size: 50px;
+          }
+          .header-title{
+            font-size: 20px;
+            margin-top: 12px;
+          }
+      }
+    }
+    .ant-drawer-body{
+        .list-collection{
+            padding: 10px;
+            .list-item{
+                padding: 10px 0px;
+                font-size: 16px;
+                color: #2b2020;
+                cursor: pointer;
+                .list-item-label{
+                    padding: 0px 0px 0px 8px;
+                }
+            
+            }
+        }
+    }
+}
