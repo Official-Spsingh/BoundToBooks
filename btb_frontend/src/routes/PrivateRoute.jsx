@@ -6,7 +6,10 @@ const PrivateRoute = (props) => {
     return (
         <Route exact={props.exact} path={props.path} component={props.component}>
             <HeaderComponent/>
+            <div className="children-component">
             {props.children}
+            </div>
+           
         </Route>
     )
 }

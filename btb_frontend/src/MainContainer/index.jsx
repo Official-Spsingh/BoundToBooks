@@ -3,8 +3,8 @@ import { Route, Switch } from "react-router"
 import PageNotFound from '@Components/PageNotFound'
 import LoginComponent from '@Components/LoginComponent'
 import HomeComponent from '@Components/HomeComponent'
-import HeaderComponent from '@Components/HeaderComponent'
 import PrivateRoute from '@routes/PrivateRoute'
+import ProfileComponent from '@Components/ProfileComponent'
 
 const MainContainer = (props) => {
     return (
@@ -16,6 +16,9 @@ const MainContainer = (props) => {
             
             <PrivateRoute exact path="/home">
                 <HomeComponent/>
+            </PrivateRoute>
+            <PrivateRoute exact path="/profile">
+                <ProfileComponent/>
             </PrivateRoute>
             
             <Route>

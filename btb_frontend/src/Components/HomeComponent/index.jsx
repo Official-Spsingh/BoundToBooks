@@ -1,6 +1,5 @@
 import React from 'react'
 import { withRouter } from "react-router";
-import HeaderComponent from '@Components/HeaderComponent';
 
 function HomeComponent(props) {
   return (

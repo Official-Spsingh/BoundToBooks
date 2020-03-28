@@ -1,2 +1,9 @@
 @import 'login';
-@import 'header'
+@import 'header';
+
+.children-component{
+    top: 60px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
