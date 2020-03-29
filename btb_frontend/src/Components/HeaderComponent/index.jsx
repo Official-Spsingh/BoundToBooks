@@ -3,6 +3,7 @@ import { Drawer, Avatar } from 'antd';
 import { BellOutlined, ReadOutlined, UserOutlined, CreditCardOutlined, ShoppingCartOutlined, GiftOutlined, LockOutlined } from '@ant-design/icons'
 import { useState } from 'react';
 import { withRouter } from "react-router";
+import { logout } from "@utils/auth"
 function HeaderComponent(props) {
     const [drawerVisible, setDrawerVisible] = useState(false);
     const showDrawer = () => {
@@ -12,9 +13,19 @@ function HeaderComponent(props) {
     const onClose = () => {
         setDrawerVisible(false)
     };
-    const headerRedirect = (path)=>{
-        setDrawerVisible(false); 
+    const headerRedirect = (path) => {
+        setDrawerVisible(false);
         props.history.push(path)
+    }
+    const logoutUser = () => {
+       logout().then(response=>{
+           if(response=="succesfully logged out"){
+            props.history.push("/login")
+           }
+       }).catch(err=>{
+           console.log(err)
+       })
+        
     }
     const title = <div className="header"><ReadOutlined /><div className="header-title">Bound To Books</div></div>
     return (
@@ -41,7 +52,7 @@ function HeaderComponent(props) {
                             visible={drawerVisible}
                         >
                             <div className="list-collection">
-                                <div className="list-item" onClick={()=>headerRedirect('/profile')}>
+                                <div className="list-item" onClick={() => headerRedirect('/profile')}>
                                     <UserOutlined /><span className="list-item-label">Profile</span>
                                 </div>
                                 <div className="list-item">
@@ -53,7 +64,7 @@ function HeaderComponent(props) {
                                 <div className="list-item">
                                     <GiftOutlined /><span className="list-item-label">Donate</span>
                                 </div>
-                                <div className="list-item">
+                                <div className="list-item" onClick={() => logoutUser()}>
                                     <LockOutlined /><span className="list-item-label">Logout</span>
                                 </div>
                             </div>

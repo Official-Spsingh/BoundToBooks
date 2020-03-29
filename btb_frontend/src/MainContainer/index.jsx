@@ -5,15 +5,14 @@ import LoginComponent from '@Components/LoginComponent'
 import HomeComponent from '@Components/HomeComponent'
 import PrivateRoute from '@routes/PrivateRoute'
 import ProfileComponent from '@Components/ProfileComponent'
+import LoginRoute from '../routes/LoginRoute'
 
 const MainContainer = (props) => {
     return (
         <Switch>
-            
-            <Route exact path="/login">
-                <LoginComponent />
-            </Route>
-            
+            <LoginRoute exact path="/login">
+            <LoginComponent />
+            </LoginRoute>   
             <PrivateRoute exact path="/home">
                 <HomeComponent/>
             </PrivateRoute>

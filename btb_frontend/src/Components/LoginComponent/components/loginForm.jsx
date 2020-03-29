@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { makeRequest } from '@utils/makeRequest'
+import { setItemInLocalStorage } from '@utils/localStorage'
 import { withRouter } from "react-router";
 
 const LoginForm = (props) => {
@@ -9,7 +11,27 @@ const LoginForm = (props) => {
     const [errorMessage, setErrorMessage] = useState('')
     const verifyLogin = (values) => {
         setloginLoading(true)
-       console.log(values)
+        makeRequest.post('login', values)
+            .then(response => {
+                setloginLoading(false)
+                if (response.data.status.code == 401) {
+                    setErrorMessage('User not found')
+                    form.validateFields(['email'])
+                }
+                else if (response.data.status.code == 400) {
+                    setErrorMessage('Invalid email or password')
+                    form.validateFields(['email'])
+                }
+                else if (response.data.status.code == 200) {
+                    setItemInLocalStorage('accessToken', response.data.data.access_token)
+                    setItemInLocalStorage('refreshToken', response.data.data.refresh_token)
+                    props.history.push('/home')
+                }
+            })
+            .catch(err => {
+                setloginLoading(false)
+                console.log(err)
+            })
     }
     const loginValidator = (err, value) => {
         if (errorMessage.length) {
