@@ -38,7 +38,7 @@ const Cart: React.FC<CartProps> = ({ navigate }) => {
                             {item.listing.condition}
                           </span>
                         </div>
-                        <span className="font-bold text-book-900">${item.listing.price.toFixed(2)}</span>
+                        <span className="font-bold text-book-900">₹{item.listing.price.toFixed(2)}</span>
                       </div>
                       <div className="flex items-center justify-between mt-6">
                         <div className="flex items-center gap-4 bg-book-50 px-3 py-1 rounded-full">
@@ -88,20 +88,20 @@ const Cart: React.FC<CartProps> = ({ navigate }) => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-book-600">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-book-600">
                   <span>Shipping</span>
-                  <span>${shipping.toFixed(2)}</span>
+                  <span>₹{shipping.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-book-600">
                   <span>Estimated Tax</span>
-                  <span>$0.00</span>
+                  <span>₹0.00</span>
                 </div>
                 <div className="h-px bg-book-100"></div>
                 <div className="flex justify-between text-xl font-bold text-book-900">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
               </div>
 

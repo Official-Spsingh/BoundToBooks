@@ -48,40 +48,10 @@ const Checkout: React.FC<CheckoutProps> = ({ navigate }) => {
 
       setOrders(prev => [newOrder, ...prev]);
       setSubmitting(false);
-      setSuccess(true);
       clearCart();
+      navigate('/order-success');
     }, 2000);
   };
-
-  if (success) {
-    return (
-      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
-        <div className="bg-white p-12 rounded-3xl border border-book-100 shadow-xl flex flex-col items-center">
-          <div className="bg-green-100 p-6 rounded-full text-green-600 mb-8 animate-bounce">
-            <CheckCircle2 size={64} />
-          </div>
-          <h1 className="font-serif text-4xl font-bold text-book-900 mb-4">Order Confirmed!</h1>
-          <p className="text-book-500 mb-8 max-w-sm">
-            Thank you for your purchase! Your stories are being prepared for their journey. You will receive an update once they've been shipped.
-          </p>
-          <div className="flex gap-4">
-            <button 
-              onClick={() => navigate('/dashboard')}
-              className="px-8 py-3 border-2 border-book-100 rounded-full font-bold text-book-700 hover:bg-book-50 transition-all"
-            >
-              Track Order
-            </button>
-            <button 
-              onClick={() => navigate('/')}
-              className="px-8 py-3 bg-book-900 text-white rounded-full font-bold hover:bg-book-800 transition-all shadow-lg"
-            >
-              Continue Shopping
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -207,7 +177,7 @@ const Checkout: React.FC<CheckoutProps> = ({ navigate }) => {
                     <p className="text-sm font-bold text-book-900 truncate leading-tight">{item.listing.title}</p>
                     <p className="text-[10px] text-book-500">{item.listing.author}</p>
                   </div>
-                  <span className="text-sm font-bold">${item.listing.price.toFixed(2)}</span>
+                  <span className="text-sm font-bold">₹{item.listing.price.toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -215,15 +185,15 @@ const Checkout: React.FC<CheckoutProps> = ({ navigate }) => {
             <div className="space-y-3 pt-6 border-t border-book-100">
               <div className="flex justify-between text-sm text-book-500">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm text-book-500">
                 <span>Shipping Fee</span>
-                <span>$5.99</span>
+                <span>₹500</span>
               </div>
               <div className="flex justify-between text-xl font-bold text-book-900 pt-2">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>₹{total.toFixed(2)}</span>
               </div>
             </div>
 

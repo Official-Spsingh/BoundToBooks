@@ -56,7 +56,7 @@ const TrackOrder: React.FC<TrackOrderProps> = ({ orderId, navigate }) => {
             </div>
             <div className="text-right">
               <div className="text-xs font-bold text-book-400 uppercase tracking-widest mb-1">Total Amount</div>
-              <div className="text-3xl font-bold text-book-900">${order.totalPrice.toFixed(2)}</div>
+              <div className="text-3xl font-bold text-book-900">₹{order.totalPrice.toFixed(2)}</div>
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@ const TrackOrder: React.FC<TrackOrderProps> = ({ orderId, navigate }) => {
                   <img src={item.image} className="w-10 h-14 object-cover rounded shadow-sm" alt="" />
                   <div>
                     <div className="text-sm font-bold text-book-800 underline decoraton-book-100">{item.title}</div>
-                    <div className="text-xs text-book-500">${item.price.toFixed(2)}</div>
+                    <div className="text-xs text-book-500">₹{item.price.toFixed(2)}</div>
                   </div>
                 </div>
               ))}

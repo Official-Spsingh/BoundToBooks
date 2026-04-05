@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { ShoppingCart, User, LogOut, Menu, X, BookOpen, Search } from 'lucide-react';
+import { ShoppingCart, User, LogOut, Menu, X, BookOpen, Search, Heart } from 'lucide-react';
 import { UserRole } from '../types';
 
 interface NavbarProps {
@@ -9,7 +8,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
-  const { user, logout, cart } = useAppContext();
+  const { user, logout, cart, wishlist } = useAppContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -34,6 +33,9 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
           {user?.role !== UserRole.ADMIN && (
             <button onClick={() => navigate('/sell')} className="text-book-700 hover:text-book-900 font-medium">Sell / Donate</button>
           )}
+          {user?.role !== UserRole.ADMIN && (
+            <button onClick={() => navigate('/about')} className="text-book-700 hover:text-book-900 font-medium">About</button>
+          )}
           {user?.role === UserRole.ADMIN && (
             <button onClick={() => navigate('/admin')} className="text-book-800 font-bold bg-book-100 px-3 py-1 rounded-full text-sm">Admin Dashboard</button>
           )}
@@ -41,10 +43,24 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
 
         {/* Actions */}
         <div className="flex items-center gap-4">
+          
+          <button 
+            onClick={() => navigate('/wishlist')} 
+            className="relative p-2 text-book-700 hover:bg-book-50 rounded-full"
+            title="Wishlist"
+          >
+            <Heart size={22} className={wishlist.length > 0 ? "text-red-500" : ""} fill={wishlist.length > 0 ? "currentColor" : "none"} />
+            {wishlist.length > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-2 ring-white">
+                {wishlist.length}
+              </span>
+            )}
+          </button>
 
           <button 
             onClick={() => navigate('/cart')} 
             className="relative p-2 text-book-700 hover:bg-book-50 rounded-full"
+            title="Cart"
           >
             <ShoppingCart size={22} />
             {cart.length > 0 && (
@@ -64,7 +80,10 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                 <span className="hidden lg:block">Hi, {user.name.split(' ')[0]}</span>
               </button>
               <button 
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                }}
                 className="p-2 text-book-500 hover:text-red-500 rounded-full transition-colors"
                 title="Logout"
               >

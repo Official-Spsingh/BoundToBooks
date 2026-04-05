@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Mail, Lock, User as UserIcon, BookOpen, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User as UserIcon, BookOpen, AlertCircle, ArrowRight, Sparkles } from 'lucide-react';
 import { UserRole } from '../types';
+import Button from '../components/ui/Button';
 
 interface AuthProps {
   mode: 'login' | 'register';
@@ -91,87 +91,110 @@ const Auth: React.FC<AuthProps> = ({ mode, navigate }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-book-50 relative overflow-hidden">
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-book-200 rounded-full blur-3xl opacity-50"></div>
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-vintage-accent/20 rounded-full blur-3xl opacity-50"></div>
+      {/* Abstract Background Ornaments */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+        <div className="absolute top-20 left-20 w-64 h-64 border-4 border-book-900 rounded-[64px] rotate-12"></div>
+        <div className="absolute bottom-40 right-20 w-96 h-96 border-8 border-vintage-accent rounded-full -rotate-12"></div>
+        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-book-900 rounded-2xl rotate-45"></div>
+      </div>
+      
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-book-200 rounded-full blur-3xl opacity-30"></div>
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-vintage-accent/20 rounded-full blur-3xl opacity-30"></div>
 
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 md:p-12 relative z-10 border border-book-100">
-        <div className="flex flex-col items-center mb-8">
-          <div className="bg-book-700 p-3 rounded-2xl text-white mb-4 cursor-pointer" onClick={() => navigate('/')}>
-            <BookOpen size={32} />
+      <div className="max-w-xl w-full flex flex-col md:flex-row bg-white rounded-[48px] shadow-2xl overflow-hidden relative z-10 border border-book-100">
+        {/* Decorative Side Panel */}
+        <div className="hidden md:flex md:w-2/5 bg-book-900 p-12 text-white flex-col justify-between relative overflow-hidden">
+          <div className="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="relative z-10">
+            <div className="bg-white/10 w-12 h-12 rounded-xl flex items-center justify-center mb-12">
+               <BookOpen size={24} />
+            </div>
+            <h2 className="font-serif text-3xl font-bold leading-tight mb-4">Every reader is a traveler.</h2>
+            <p className="text-book-300 text-sm font-light">Join our community of book lovers and start your next journey today.</p>
           </div>
-          <h2 className="font-serif text-3xl font-bold text-book-900">
-            {mode === 'login' ? 'Welcome Back' : 'Join the Story'}
-          </h2>
-          <p className="text-book-500 mt-2 text-center font-light">
-            {mode === 'login' ? 'Your bookshelf is waiting for you.' : 'Create an account to start your journey.'}
-          </p>
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-book-400">
+            <Sparkles size={14} className="text-vintage-accent" />
+            Curated by Readers
+          </div>
         </div>
 
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm flex items-center gap-2">
-            <AlertCircle size={18} />
-            {error}
+        {/* Form Side */}
+        <div className="flex-grow p-8 md:p-12">
+          <div className="flex flex-col items-center md:items-start mb-8 text-center md:text-left">
+            <h2 className="font-serif text-3xl font-bold text-book-900">
+              {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+            </h2>
+            <p className="text-book-500 mt-2 text-sm font-light">
+              {mode === 'login' ? 'Continue your literary adventure.' : 'Begin your sustainable reading journey.'}
+            </p>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {mode === 'register' && (
-            <div className="relative">
-              <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300" size={18} />
-              <input
-                type="text" required placeholder="Full Name"
-                className="w-full pl-12 pr-4 py-3 bg-book-50 border border-book-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-book-700/20"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-              />
+          {error && (
+            <div className="mb-6 bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-2xl text-xs flex items-center gap-2 animate-in slide-in-from-top-2 duration-300">
+              <AlertCircle size={16} />
+              {error}
             </div>
           )}
 
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300" size={18} />
-            <input
-              type="email" required placeholder="Email Address"
-              className="w-full pl-12 pr-4 py-3 bg-book-50 border border-book-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-book-700/20"
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {mode === 'register' && (
+              <div className="relative group">
+                <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300 group-focus-within:text-book-900 transition-colors" size={18} />
+                <input
+                  type="text" required placeholder="Full Name"
+                  className="w-full pl-12 pr-4 py-4 bg-book-50/50 border border-book-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-book-900/5 focus:bg-white transition-all text-sm"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                />
+              </div>
+            )}
 
-          <div className="relative">
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300" size={18} />
-            <input
-              type="password" required placeholder="Password"
-              className="w-full pl-12 pr-4 py-3 bg-book-50 border border-book-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-book-700/20"
-              value={formData.password}
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
-            />
-          </div>
-
-          {mode === 'register' && (
-            <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300" size={18} />
+            <div className="relative group">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300 group-focus-within:text-book-900 transition-colors" size={18} />
               <input
-                type="password" required placeholder="Confirm Password"
-                className="w-full pl-12 pr-4 py-3 bg-book-50 border border-book-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-book-700/20"
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                type="email" required placeholder="Email Address"
+                className="w-full pl-12 pr-4 py-4 bg-book-50/50 border border-book-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-book-900/5 focus:bg-white transition-all text-sm"
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
             </div>
-          )}
 
-          <button
-            type="submit" disabled={loading}
-            className="w-full py-4 bg-book-900 text-white rounded-xl font-bold hover:bg-book-800 transition-all flex items-center justify-center gap-2"
-          >
-            {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : (mode === 'login' ? 'Sign In' : 'Create Account')}
-          </button>
-        </form>
+            <div className="relative group">
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300 group-focus-within:text-book-900 transition-colors" size={18} />
+              <input
+                type="password" required placeholder="Password"
+                className="w-full pl-12 pr-4 py-4 bg-book-50/50 border border-book-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-book-900/5 focus:bg-white transition-all text-sm"
+                value={formData.password}
+                onChange={(e) => setFormData({...formData, password: e.target.value})}
+              />
+            </div>
 
-        <div className="mt-8 text-center text-sm">
-          <span className="text-book-500">{mode === 'login' ? "Don't have an account? " : "Already have an account? "}</span>
-          <button onClick={() => navigate(mode === 'login' ? '/register' : '/login')} className="text-book-800 font-bold hover:underline">
-            {mode === 'login' ? 'Sign up' : 'Log in'}
-          </button>
+            {mode === 'register' && (
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-book-300 group-focus-within:text-book-900 transition-colors" size={18} />
+                <input
+                  type="password" required placeholder="Confirm Password"
+                  className="w-full pl-12 pr-4 py-4 bg-book-50/50 border border-book-50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-book-900/5 focus:bg-white transition-all text-sm"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                />
+              </div>
+            )}
+
+            <Button
+              type="submit" loading={loading}
+              className="w-full py-4 text-base mt-2"
+            >
+              {mode === 'login' ? 'Sign In' : 'Join Now'} <ArrowRight size={18} className="ml-2" />
+            </Button>
+          </form>
+
+          <div className="mt-8 text-center md:text-left text-sm">
+            <span className="text-book-400 font-light">{mode === 'login' ? "New here? " : "Joined already? "}</span>
+            <button onClick={() => navigate(mode === 'login' ? '/register' : '/login')} className="text-book-900 font-bold hover:underline transition-all">
+              {mode === 'login' ? 'Create an account' : 'Log in to your shelf'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

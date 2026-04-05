@@ -119,7 +119,7 @@ const BookForm: React.FC<BookFormProps> = ({
           {mode !== RequestType.DONATE && (
             <div className="space-y-2">
               <label className="text-xs font-bold text-book-500 uppercase tracking-wider">
-                {mode === 'ADMIN' ? 'Final Selling Price ($)' : 'Expected Price ($)'}
+                {mode === 'ADMIN' ? 'Final Selling Price (₹)' : 'Expected Price (₹)'}
               </label>
               <input 
                 name="price" required type="number" step="0.01" min="0" 

@@ -38,6 +38,19 @@ export interface User {
   email: string;
   role: UserRole;
   profileImage?: string;
+  bio?: string;
+  phone?: string;
+  address?: string;
+}
+
+export interface BookReview {
+  id: string;
+  bookId: string;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
 }
 
 export interface BookItem {

@@ -9,6 +9,12 @@ import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import SellDonate from './pages/SellDonate';
 import TrackOrder from './pages/TrackOrder';
+import AboutUs from './pages/AboutUs';
+import FAQ from './pages/FAQ';
+import ContactUs from './pages/ContactUs';
+import Wishlist from './pages/Wishlist';
+import ProfileSettings from './pages/ProfileSettings';
+import OrderSuccess from './pages/OrderSuccess';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import { UserRole } from './types';
@@ -60,6 +66,12 @@ const AppContent: React.FC = () => {
     if (currentPath === '/sell') return <SellDonate navigate={navigate} />;
     if (currentPath === '/cart') return <Cart navigate={navigate} />;
     if (currentPath === '/checkout') return <Checkout navigate={navigate} />;
+    if (currentPath === '/about') return <AboutUs navigate={navigate} />;
+    if (currentPath === '/faq') return <FAQ navigate={navigate} />;
+    if (currentPath === '/contact') return <ContactUs navigate={navigate} />;
+    if (currentPath === '/wishlist') return <Wishlist navigate={navigate} />;
+    if (currentPath === '/profile-settings') return <ProfileSettings navigate={navigate} />;
+    if (currentPath === '/order-success') return <OrderSuccess navigate={navigate} />;
     
     if (currentPath.startsWith('/track/')) {
       const orderId = currentPath.split('/')[2];
@@ -73,42 +85,48 @@ const AppContent: React.FC = () => {
     return <Marketplace navigate={navigate} />;
   };
 
+  const isAuthPage = currentPath === '/login' || currentPath === '/register';
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar navigate={navigate} />
-      <main className="flex-grow pt-16">
+      {!isAuthPage && <Navbar navigate={navigate} />}
+      <main className={`flex-grow ${!isAuthPage ? 'pt-16' : ''}`}>
         {renderRoute()}
       </main>
-      <footer className="bg-book-900 text-book-100 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="col-span-1 md:col-span-2">
-            <h2 className="font-serif text-2xl font-bold mb-4">Bound to Books</h2>
-            <p className="text-book-400 max-w-sm">
-              We believe every book has a soul and deserves to be read again. 
-              Join our community of book lovers in recirculating the magic of stories.
-            </p>
+      {!isAuthPage && (
+        <footer className="bg-book-900 text-book-100 py-12 mt-auto">
+          <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="col-span-1 md:col-span-2">
+              <h2 className="font-serif text-2xl font-bold mb-4">Bound to Books</h2>
+              <p className="text-book-400 max-w-sm">
+                We believe every book has a soul and deserves to be read again. 
+                Join our community of book lovers in recirculating the magic of stories.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Platform</h3>
+              <ul className="space-y-2 text-book-400">
+                <li><button onClick={() => navigate('/')} className="hover:text-vintage-accent transition-colors">Marketplace</button></li>
+                <li><button onClick={() => navigate('/sell')} className="hover:text-vintage-accent transition-colors">Sell Books</button></li>
+                <li><button onClick={() => navigate('/sell')} className="hover:text-vintage-accent transition-colors">Donate Books</button></li>
+                <li><button onClick={() => navigate('/wishlist')} className="hover:text-vintage-accent transition-colors">Your Wishlist</button></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold mb-4">Support</h3>
+              <ul className="space-y-2 text-book-400">
+                <li><button onClick={() => navigate('/about')} className="hover:text-vintage-accent transition-colors">About Us</button></li>
+                <li><button onClick={() => navigate('/faq')} className="hover:text-vintage-accent transition-colors">FAQ</button></li>
+                <li><button onClick={() => navigate('/contact')} className="hover:text-vintage-accent transition-colors">Contact Us</button></li>
+                {user && <li><button onClick={() => navigate('/dashboard')} className="hover:text-vintage-accent transition-colors">Track Order</button></li>}
+              </ul>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold mb-4">Platform</h3>
-            <ul className="space-y-2 text-book-400">
-              <li><button onClick={() => navigate('/')}>Marketplace</button></li>
-              <li><button onClick={() => navigate('/sell')}>Sell Books</button></li>
-              <li><button onClick={() => navigate('/sell')}>Donate Books</button></li>
-            </ul>
+          <div className="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-book-800 text-center text-book-500 text-sm">
+            &copy; {new Date().getFullYear()} Bound to Books. All rights reserved.
           </div>
-          <div>
-            <h3 className="font-bold mb-4">Support</h3>
-            <ul className="space-y-2 text-book-400">
-              <li><a href="#">Shipping Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-book-800 text-center text-book-500 text-sm">
-          &copy; {new Date().getFullYear()} Bound to Books. All rights reserved.
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   );
 };

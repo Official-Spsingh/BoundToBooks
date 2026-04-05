@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   User, BookRequest, BookListing, Order, 
-  CartItem 
+  CartItem, BookReview, UserRole, RequestStatus 
 } from '../types';
 
 interface AppContextType {
@@ -21,6 +21,16 @@ interface AppContextType {
   logout: () => void;
   addListing: (listing: Omit<BookListing, 'id' | 'isAvailable' | 'sourceRequestId'>) => void;
   updateOrderStatus: (orderId: string, status: any) => void;
+  wishlist: string[];
+  toggleWishlist: (bookId: string) => void;
+  reviews: BookReview[];
+  addReview: (review: Omit<BookReview, 'id' | 'createdAt'>) => void;
+  updateProfile: (data: Partial<User>) => void;
+  updateListing: (id: string, data: Partial<BookListing>) => void;
+  deleteListing: (id: string) => void;
+  updateRequestStatus: (id: string, status: RequestStatus) => void;
+  toggleListingAvailability: (id: string) => void;
+  allUsers: User[];
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -131,6 +141,58 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.removeItem('btb_user');
   };
 
+  const [wishlist, setWishlist] = useState<string[]>(() => {
+    const saved = localStorage.getItem('btb_wishlist');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [reviews, setReviews] = useState<BookReview[]>(() => {
+    const saved = localStorage.getItem('btb_reviews');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('btb_wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  useEffect(() => {
+    localStorage.setItem('btb_reviews', JSON.stringify(reviews));
+  }, [reviews]);
+
+  const toggleWishlist = (bookId: string) => {
+    setWishlist(prev => 
+      prev.includes(bookId) ? prev.filter(id => id !== bookId) : [...prev, bookId]
+    );
+  };
+
+  const [allUsers, setAllUsers] = useState<User[]>(() => {
+    const saved = localStorage.getItem('btb_all_users');
+    const initialUsers = [
+      { id: '1', name: 'Admin User', email: 'admin@admin.com', role: UserRole.ADMIN },
+      { id: '2', name: 'S.P. Singh', email: 'spsingh@gmail.com', role: UserRole.USER, bio: 'Classic book lover.' },
+    ];
+    return saved ? JSON.parse(saved) : initialUsers;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('btb_all_users', JSON.stringify(allUsers));
+  }, [allUsers]);
+
+  const addReview = (review: Omit<BookReview, 'id' | 'createdAt'>) => {
+    const newReview: BookReview = {
+      ...review,
+      id: Math.random().toString(36).substr(2, 9),
+      createdAt: new Date().toISOString()
+    };
+    setReviews(prev => [...prev, newReview]);
+  };
+
+  const updateProfile = (data: Partial<User>) => {
+    if (!user) return;
+    const updatedUser = { ...user, ...data };
+    setUser(updatedUser);
+  };
+
   const addListing = (listing: Omit<BookListing, 'id' | 'isAvailable' | 'sourceRequestId'>) => {
     const newListing: BookListing = {
       ...listing,
@@ -145,14 +207,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
   };
 
+  const updateListing = (id: string, data: Partial<BookListing>) => {
+    setListings(prev => prev.map(l => l.id === id ? { ...l, ...data } : l));
+  };
+
+  const deleteListing = (id: string) => {
+    setListings(prev => prev.filter(l => l.id !== id));
+  };
+
+  const updateRequestStatus = (id: string, status: RequestStatus) => {
+    setRequests(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+  };
+
+  const toggleListingAvailability = (id: string) => {
+    setListings(prev => prev.map(l => l.id === id ? { ...l, isAvailable: !l.isAvailable } : l));
+  };
+
   return (
     <AppContext.Provider value={{ 
       user, setUser, 
       requests, setRequests, 
       listings, setListings, 
       orders, setOrders,
-      cart, addToCart, removeFromCart, clearCart,
-      logout, addListing, updateOrderStatus
+      cart, addToCart, removeFromCart, clearCart, logout,
+      wishlist, toggleWishlist, reviews, addReview, updateProfile,
+      updateListing, deleteListing, updateRequestStatus, toggleListingAvailability,
+      allUsers, updateOrderStatus
     }}>
       {children}
     </AppContext.Provider>
